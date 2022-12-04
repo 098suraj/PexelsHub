@@ -37,6 +37,9 @@ jobs:
     name: 🔍 Lint
     runs-on: ubuntu-latest
     steps:
+    
+     - name: Make gradle executable
+        run: chmod +x ./gradlew
 
       - name: Checkout code
         uses: actions/checkout@v2
