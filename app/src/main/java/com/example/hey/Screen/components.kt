@@ -1,6 +1,5 @@
 package com.example.hey.Screen
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -19,11 +18,10 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.example.domain.model.VideoFire
-import com.example.hey.navigation.Screen
+import com.example.domain.model.PhotoDataModel
 
 @Composable
-fun HorizontalScreen(allPhotos: MutableList<VideoFire?>, navHostController: NavHostController,) {
+fun HorizontalScreen(allPhotos: MutableList<PhotoDataModel.Photo>, navHostController: NavHostController,) {
     LazyRow(
 
     ) {
@@ -42,7 +40,7 @@ fun HorizontalScreen(allPhotos: MutableList<VideoFire?>, navHostController: NavH
 
 
 @Composable
-fun ImageBox(video: VideoFire?, navController: NavHostController) {
+fun ImageBox(photos:PhotoDataModel.Photo, navController: NavHostController) {
     val screenWidth = LocalConfiguration.current.screenWidthDp
 
     Card(
@@ -55,10 +53,10 @@ fun ImageBox(video: VideoFire?, navController: NavHostController) {
                 .height(480.dp)
 
         ) {
-            if (video != null) {
+            if (photos != null) {
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
-                        .data(video.photourl)
+                        .data(photos.url)
                         .crossfade(true)
                         .build(),
                     contentDescription = null,

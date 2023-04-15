@@ -7,7 +7,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,27 +22,29 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.example.domain.model.PhotoFire
-import com.example.domain.model.VideoFire
+import androidx.paging.compose.collectAsLazyPagingItems
+
 import com.example.hey.R
 import com.example.hey.Screen.Home.HomeViewModel
-import com.example.hey.Screen.Movie.MovieListContent
+import com.example.hey.Screen.Movie.PhotoListContent
 import com.example.hey.navigation.Screen
 import com.example.hey.ui.theme.AppContentColor
 import com.example.hey.ui.theme.AppThemeColor
 import com.example.hey.utils.DataProvider
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.annotation.RootNavGraph
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+@RootNavGraph(start = true)
+@Destination
 @Composable
-fun Home(navHostController: NavHostController, homeViewModel: HomeViewModel = hiltViewModel()) {
+fun Home(navController: DestinationsNavigator, homeViewModel: HomeViewModel = hiltViewModel()) {
     val systemUiController = rememberSystemUiController()
     val systemBarColor = MaterialTheme.colors.AppThemeColor
-//    val allPhotos = homeViewModel.getPhotos.collectAsLazyPagingItems();
-    val state=homeViewModel.uiState.collectAsState().value
-    val Videostate=homeViewModel.uiVideoState.collectAsState().value
-
-    // val allVideos = homeViewModel.getVideos.collectAsLazyPagingItems()
+    val getPhotos = homeViewModel.photo().collectAsLazyPagingItems()
+  //  val allVideos = homeViewModel.video().collectAsLazyPagingItems()
 
 
     SideEffect {
@@ -64,36 +65,7 @@ fun Home(navHostController: NavHostController, homeViewModel: HomeViewModel = hi
             ) {
                 Top()
                 Spacer(modifier = Modifier.height(20.dp))
-                when(Videostate){
-                    is HomeViewModel.VideoAppState.Loading ->    Column(
-                        modifier = Modifier.fillMaxSize(),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        CircularProgressIndicator()
-                    }
-                    is HomeViewModel.VideoAppState.Loaded-> {
-                        HorizontalScreen(allPhotos = Videostate.list, navHostController)
-                    }
-                    else -> {}
-                }
-                when(state){
-                    is HomeViewModel.PhotoAppState.Loading ->    Column(
-                         modifier = Modifier.fillMaxSize(),
-                         verticalArrangement = Arrangement.Center,
-                         horizontalAlignment = Alignment.CenterHorizontally
-                     ) {
-                         CircularProgressIndicator()
-                     }
-                   is HomeViewModel.PhotoAppState.Loaded-> {
-                        MovieListContent(navController = navHostController,state.list)
-                    }
-                    else -> {}
-                }
-
-
-
-
+                PhotoListContent( photo =getPhotos )
             }
 
 
@@ -165,7 +137,7 @@ fun BottomNavigation(navController: NavHostController) {
 fun BottomBarIcon(screen: Screen) {
     when (screen) {
         Screen.Home -> Icon(imageVector = Icons.Filled.Home, contentDescription = null)
-        Screen.Photo -> Icon(imageVector =Icons.Filled.PlayArrow, contentDescription = null)
+        Screen.Photo -> Icon(imageVector = Icons.Filled.PlayArrow, contentDescription = null)
         Screen.Video -> Icon(imageVector = Icons.Filled.Favorite, contentDescription = null)
         else -> {}
     }

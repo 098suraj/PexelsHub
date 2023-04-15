@@ -11,7 +11,6 @@ data class PhotoDataModel(
 ) {
     @Entity(tableName = "photos")
     data class Photo(
-
         var alt: String,
         @PrimaryKey(autoGenerate = true)
         var id: Int,

@@ -9,7 +9,6 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
@@ -17,24 +16,22 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
-import com.example.domain.model.PhotoFire
+import com.example.domain.model.PhotoDataModel
 import com.example.hey.Screen.Details.DogInfoCard
 import com.example.hey.ui.theme.AppContentColor
 import com.example.hey.ui.theme.AppThemeColor
-import com.example.hey.ui.theme.ItemBackgroundColor
 import com.example.hey.ui.theme.TitleColor
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 
 @Composable
-fun Details(navController: NavController, photoFire: PhotoFire) {
-    var dog by remember {
-        mutableStateOf<PhotoFire?>(null)
-    }
-    dog=photoFire
+@Destination
+fun Details(navController:DestinationsNavigator) {
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -57,13 +54,13 @@ fun Details(navController: NavController, photoFire: PhotoFire) {
         },
 
         content = {
-            DetailsView(dog)
+//            DetailsView(dog)
         }
     )
 }
 
 @Composable
-fun DetailsView(dog: PhotoFire?) {
+fun DetailsView(dog: PhotoDataModel.Photo) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -73,14 +70,14 @@ fun DetailsView(dog: PhotoFire?) {
 
 
         if (dog != null) {
-            print(dog.Content)
+            print(dog.photographerId)
         }
         // Basic details
         item {
             dog?.apply {
 
                 val dogImage: Painter = rememberAsyncImagePainter(
-                    ImageRequest.Builder(LocalContext.current).data(data = photourl)
+                    ImageRequest.Builder(LocalContext.current).data(data = url)
                         .apply(block = fun ImageRequest.Builder.() {
                             crossfade(true)
                         }).build()
@@ -96,7 +93,7 @@ fun DetailsView(dog: PhotoFire?) {
                 )
 
 
-                by?.let { DogInfoCard(it) }
+                photographerId?.let { DogInfoCard(it.toString()) }
             }
         }
 
@@ -105,7 +102,7 @@ fun DetailsView(dog: PhotoFire?) {
             dog?.apply {
                 Title(title = "Content")
                 Spacer(modifier = Modifier.height(16.dp))
-                Content?.let {
+                photographer?.let {
                     Text(
                         text = it,
                         modifier = Modifier

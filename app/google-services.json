@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1069759506670",
+    "firebase_url": "https://birthday-7721a-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "birthday-7721a",
+    "storage_bucket": "birthday-7721a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1069759506670:android:21e408be5bba2b0b066bff",
+        "android_client_info": {
+          "package_name": "com.example.hey"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1069759506670-ta7gtikss5i5apg9nqamgjfaqi0k1peb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJGiKEZEGH0o7yi8qBxxfzudgJcUHDUJI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1069759506670-ta7gtikss5i5apg9nqamgjfaqi0k1peb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

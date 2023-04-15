@@ -8,29 +8,30 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.domain.model.PhotoFire
-import com.example.domain.model.VideoFire
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.hey.Screen.Home.HomeViewModel
-import com.example.hey.Screen.Movie.MovieListContent
-import com.example.hey.Screen.Video.VideoListContent
+
+import com.example.hey.Screen.Movie.PhotoListContent
+
 import com.example.hey.ui.theme.AppContentColor
 import com.example.hey.ui.theme.AppThemeColor
 import com.google.accompanist.pager.*
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun ListPage(navHostController: NavHostController) {
+@Destination
+fun ListPage(navHostController: DestinationsNavigator) {
     val pagerState = rememberPagerState(0)
 
 
-    //  val allPhotos=viewModel.getPhotos.collectAsLazyPagingItems()
-    // val allVideos=viewModel.getVideos.collectAsLazyPagingItems()
 
     Column() {
         Spacer(modifier = Modifier.height(40.dp))
         Tabs(pagerState = pagerState)
-        TabsContent(pagerState, navHostController)
+       // TabsContent(pagerState, navHostController)
     }
 
 }
@@ -102,39 +103,11 @@ fun TabContentScreen(
     data: String,
     navHostController: NavHostController,
     viewModel: HomeViewModel = hiltViewModel()
-    ) {
+) {
+    val allPhotos = viewModel.photo().collectAsLazyPagingItems()
+    //  val allVideos=viewModel.video().collectAsLazyPagingItems()
 
-    val state=viewModel.uiState.collectAsState().value
-    val Videostate=viewModel.uiVideoState.collectAsState().value
     if (data == "Photo") {
-        when(state){
-            is HomeViewModel.PhotoAppState.Loading ->    Column(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                CircularProgressIndicator()
-            }
-            is HomeViewModel.PhotoAppState.Loaded-> {
-                MovieListContent(navController = navHostController,state.list)
-            }
-            else -> {}
-        }
-    } else {
-        when(Videostate){
-            is HomeViewModel.VideoAppState.Loading ->    Column(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                CircularProgressIndicator()
-            }
-            is HomeViewModel.VideoAppState.Loaded-> {
-                VideoListContent(allVideos = Videostate.list, navController = navHostController)
-            }
-            else -> {}
-        }
-
+   //     PhotoListContent(navController = navHostController, allPhotos)
     }
-
 }

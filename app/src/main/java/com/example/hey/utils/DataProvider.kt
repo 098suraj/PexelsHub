@@ -8,4 +8,5 @@ object DataProvider {
         Screen.Photo,
         Screen.Video
     )
+
 }

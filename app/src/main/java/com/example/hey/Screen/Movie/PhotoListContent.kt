@@ -1,4 +1,4 @@
-package com.example.hey.Screen.Video
+package com.example.hey.Screen.Movie
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -17,37 +17,38 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.items
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
-import com.example.domain.model.PhotoFire
-import com.example.domain.model.VideoFire
-import com.example.hey.navigation.Screen
+import com.example.domain.model.PhotoDataModel
+
 import com.example.hey.ui.theme.ItemBackgroundColor
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 
 @Composable
-fun VideoListContent(
-    allVideos: MutableList<VideoFire?>,
-    navController: NavHostController
+fun PhotoListContent(
+
+    photo: LazyPagingItems<PhotoDataModel.Photo>
 ) {
     val spacing = 20.dp
     val halfSpacing = spacing / 2
     Column(modifier = Modifier
+        .padding(16.dp)
         .fillMaxSize()
-        .padding(16.dp),
+
 
         )
     {
         LazyColumn(
             contentPadding = PaddingValues(top = halfSpacing),
         ) {
-            items(
-                items = allVideos,
+            items(items= photo) { photo ->
+                if (photo != null) {
 
-            ) { video ->
-                if (video != null) {
+                    PhotoListItem(photo = photo)
                     Spacer(modifier = Modifier.height(36.dp))
-                    MovieListItem(video = video, navController = navController)
                 }
             }
         }
@@ -55,7 +56,7 @@ fun VideoListContent(
 }
 
 @Composable
-fun MovieListItem(video: VideoFire?, navController: NavHostController) {
+fun PhotoListItem( photo: PhotoDataModel.Photo) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -75,9 +76,7 @@ fun MovieListItem(video: VideoFire?, navController: NavHostController) {
                     .height(IntrinsicSize.Max)
                     .fillMaxWidth()
                     .clickable {
-                        val videoData=video
-                        navController.currentBackStackEntry?.savedStateHandle?.set("VideoData",videoData)
-                        navController.navigate(route = Screen.VideoDetails.route)
+
                     },
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -95,19 +94,15 @@ fun MovieListItem(video: VideoFire?, navController: NavHostController) {
                         )
                         .weight(0.6f)
                 ) {
-                    if (video != null) {
-                        video.by?.let { Text(text = it, style = MaterialTheme.typography.subtitle1) }
-                    }
+                    photo.photographer?.let { Text(text = it, style = MaterialTheme.typography.subtitle1) }
                     Spacer(modifier = Modifier.height(4.dp))
-                    if (video != null) {
-                        video.Content?.let {
-                            Text(
-                                text = it,
-                                style = MaterialTheme.typography.caption,
-                                maxLines = 4,
-                                overflow = TextOverflow.Ellipsis
-                            )
-                        }
+                    photo.photographerId?.let {
+                        Text(
+                            text = it.toString(),
+                            style = MaterialTheme.typography.caption,
+                            maxLines = 4,
+                            overflow = TextOverflow.Ellipsis
+                        )
                     }
                     Spacer(modifier = Modifier.height(8.dp))
 
@@ -121,18 +116,16 @@ fun MovieListItem(video: VideoFire?, navController: NavHostController) {
                 .height(164.dp),
             shape = RoundedCornerShape(16.dp)
         ) {
-            if (video != null) {
-                Image(
-                    painter = rememberAsyncImagePainter(
-                        ImageRequest.Builder(LocalContext.current).data(data = video.photourl)
-                            .apply(block = fun ImageRequest.Builder.() {
-                                crossfade(true)
-                            }).build()
-                    ),
-                    contentDescription = null,
-                    contentScale = ContentScale.FillWidth
-                )
-            }
+            Image(
+                painter = rememberAsyncImagePainter(
+                    ImageRequest.Builder(LocalContext.current).data(data = photo.src.medium)
+                        .apply(block = fun ImageRequest.Builder.() {
+                            crossfade(true)
+                        }).build()
+                ),
+                contentDescription = null,
+                contentScale = ContentScale.FillWidth
+            )
 
         }
     }
