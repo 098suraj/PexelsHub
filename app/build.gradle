@@ -8,7 +8,7 @@ plugins {
     id "dagger.hilt.android.plugin"
     id 'kotlin-parcelize'
     id 'kotlin-kapt'
-    id 'com.google.devtools.ksp' version '1.7.20-1.0.8'
+    id 'com.google.devtools.ksp' version '1.8.20-1.0.11'
 }
 moduleGraphConfig {
     readmePath = "D:\\AndroidStudioProjects\\NotCompleted\\Compose\\Hey\\README.md"
