@@ -18,10 +18,10 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.example.domain.model.PhotoDataModel
+import com.example.domain.model.Photos
 
 @Composable
-fun HorizontalScreen(allPhotos: MutableList<PhotoDataModel.Photo>, navHostController: NavHostController,) {
+fun HorizontalScreen(allPhotos: MutableList<Photos.Photo>, navHostController: NavHostController,) {
     LazyRow(
 
     ) {
@@ -40,7 +40,7 @@ fun HorizontalScreen(allPhotos: MutableList<PhotoDataModel.Photo>, navHostContro
 
 
 @Composable
-fun ImageBox(photos:PhotoDataModel.Photo, navController: NavHostController) {
+fun ImageBox(photos:Photos.Photo, navController: NavHostController) {
     val screenWidth = LocalConfiguration.current.screenWidthDp
 
     Card(

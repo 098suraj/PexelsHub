@@ -1,6 +1,6 @@
 package com.example.hey.di
 
-import com.example.domain.repository.ImViRepository
+import com.example.domain.repository.PixelsRepository
 import com.example.domain.useCases.*
 import dagger.Module
 import dagger.Provides
@@ -12,7 +12,7 @@ import dagger.hilt.components.SingletonComponent
 object UseCasesModule {
     @Provides
     fun provideUSeCases(
-        repository: ImViRepository,
+        repository: PixelsRepository,
     ) =ImvUseCases(
         getPhotosFromDbCase = GetPhotosFromDb(repository),
         getPhotosUseCase = GetPhotos(repository),

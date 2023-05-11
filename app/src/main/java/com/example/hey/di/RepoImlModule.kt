@@ -1,7 +1,7 @@
 package com.example.hey.di
 
 import com.example.data.repository.dataSourceImp.*
-import com.example.domain.repository.ImViRepository
+import com.example.domain.repository.PixelsRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,7 +16,7 @@ object RepoImlModule {
        localPhotoImp: LocalPhotoImp,
        remoteImageImp: RemoteImageImp,
        remoteVideoImp: RemoteVideoImp
-    ):ImViRepository=RepoIml(
+    ):PixelsRepository=RepoIml(
         localPhotoImp=localPhotoImp,
         localVideoImp=localVideoImp,
         remoteImageImp=remoteImageImp,

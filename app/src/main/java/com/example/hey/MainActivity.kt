@@ -4,24 +4,34 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.items
 
 import com.example.hey.Screen.BottomNavigation
 import com.example.hey.Screen.Home.HomeViewModel
+import com.example.hey.Screen.Movie.PhotoListContent
 import com.example.hey.Screen.NavGraphs
 import com.example.hey.navigation.Screen
 import com.example.hey.ui.theme.AppContentColor
@@ -51,9 +61,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-
                     Main()
-
                 }
             }
         }
@@ -65,22 +73,24 @@ class MainActivity : ComponentActivity() {
 fun Main() {
     val engine = rememberAnimatedNavHostEngine()
     val navController = engine.rememberNavController()
+    val viewModel= hiltViewModel<HomeViewModel>()
+    val content=viewModel.photo().collectAsLazyPagingItems()
     Scaffold(
         backgroundColor = MaterialTheme.colors.AppThemeColor,
         contentColor = MaterialTheme.colors.AppContentColor,
         bottomBar = { BottomNavigation(navController = navController) },
-    ) {
-        it
+    ) {it
 
-        DestinationsNavHost(
-            engine = engine,
-            navController = navController,
-            navGraph = NavGraphs.root,
-            startRoute =NavGraphs.root.startRoute
-        )
-        LaunchedEffect(Unit) {
-            delay(2000)
-        }
+        PhotoListContent()
+//        DestinationsNavHost(
+//            engine = engine,
+//            navController = navController,
+//            navGraph = NavGraphs.root,
+//            startRoute =NavGraphs.root.startRoute
+//        )
+//        LaunchedEffect(Unit) {
+//            delay(2000)
+//        }
 
     }
 }

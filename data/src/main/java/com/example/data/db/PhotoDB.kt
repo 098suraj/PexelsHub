@@ -6,7 +6,7 @@ import androidx.room.TypeConverters
 import com.example.domain.model.*
 
 @Database(
-    entities = [VideoDataModel.Video::class, PhotoDataModel.Photo::class, RemoteKeysPhotos::class, RemoteKeysVideo::class],
+    entities = [VideoDataModel.Video::class, Photos.Photo::class, RemoteKeysPhotos::class, RemoteKeysVideo::class],
     version = 2,
     exportSchema = false
 )

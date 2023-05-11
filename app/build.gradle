@@ -7,21 +7,21 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id "dagger.hilt.android.plugin"
     id 'kotlin-parcelize'
+    id 'com.google.devtools.ksp' version '1.8.10-1.0.9'
     id 'kotlin-kapt'
-    id 'com.google.devtools.ksp' version '1.8.20-1.0.11'
 }
 moduleGraphConfig {
     readmePath = "D:\\AndroidStudioProjects\\NotCompleted\\Compose\\Hey\\README.md"
     heading = "### Dependency Diagram"
-    theme= Theme.NEUTRAL
-    orientation= Orientation.LEFT_TO_RIGHT
+    theme = Theme.NEUTRAL
+    orientation = Orientation.LEFT_TO_RIGHT
 }
 
 android {
     namespace 'com.example.hey'
     compileSdk 33
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.6"
+        kotlinCompilerExtensionVersion = "1.4.4"
     }
     defaultConfig {
         applicationId "com.example.hey"
@@ -43,31 +43,39 @@ android {
     }
 
     buildTypes {
-        release {
+        "debug" {
+            debuggable= true
             minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            jniDebuggable true
+            renderscriptDebuggable true
+        }
+        "release" {
+            minifyEnabled true
+            signingConfig signingConfigs.debug
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '17'
     }
     buildFeatures {
         compose true
+
         // Disable unused AGP features
-
-
     }
+
 
     packagingOptions {
         resources {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
-    applicationVariants.all { variant ->
+    applicationVariants.configureEach { variant ->
         kotlin.sourceSets {
             getByName(variant.name) {
                 kotlin.srcDir("build/generated/ksp/${variant.name}/kotlin")
@@ -81,8 +89,7 @@ dependencies {
     implementation composeBom
     androidTestImplementation composeBom
 
-
-
+    implementation 'com.google.devtools.ksp:symbol-processing-api:1.8.0-1.0.9'
     implementation 'androidx.core:core-ktx:1.10.0'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
     implementation 'androidx.activity:activity-compose:1.7.1'
@@ -95,14 +102,12 @@ dependencies {
     debugImplementation 'androidx.compose.ui:ui-test-manifest'
 
 
-
     implementation 'androidx.compose.material3:material3'
     implementation project(path: ':domain')
     implementation project(path: ':data')
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-
 
 
     //hilt
@@ -131,7 +136,8 @@ dependencies {
     implementation "androidx.room:room-paging:$room_version"
 
     // Paging 3.0
-    implementation 'androidx.paging:paging-compose:1.0.0-alpha18'
+    // Paging 3.0
+    implementation 'androidx.paging:paging-compose:1.0.0-alpha14'
 
 
     //Pager
@@ -142,8 +148,6 @@ dependencies {
     def mediaVersion = "1.0.1"
     implementation "androidx.media3:media3-exoplayer:$mediaVersion"
     implementation "androidx.media3:media3-ui:$mediaVersion"
-
-
 
 
     implementation 'io.github.raamcosta.compose-destinations:animations-core:1.7.25-beta'

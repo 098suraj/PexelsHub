@@ -16,10 +16,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
-import com.example.domain.model.PhotoDataModel
+import com.example.domain.model.Photos
 import com.example.hey.Screen.Details.DogInfoCard
 import com.example.hey.ui.theme.AppContentColor
 import com.example.hey.ui.theme.AppThemeColor
@@ -60,7 +59,7 @@ fun Details(navController:DestinationsNavigator) {
 }
 
 @Composable
-fun DetailsView(dog: PhotoDataModel.Photo) {
+fun DetailsView(dog: Photos.Photo) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()

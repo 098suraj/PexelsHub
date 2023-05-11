@@ -1,8 +1,10 @@
 package com.example.hey.Screen.Home
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
-import com.example.domain.model.PhotoDataModel
+import androidx.paging.cachedIn
+import com.example.domain.model.Photos
 
 import com.example.domain.model.VideoDataModel
 
@@ -15,23 +17,22 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val useCases: ImvUseCases,
+) : ViewModel() {
 
-    ) : ViewModel() {
 
-
-    fun photo(): Flow<PagingData<PhotoDataModel.Photo>> {
-        return useCases.getPhotosUseCase()
+    fun photo(): Flow<PagingData<Photos.Photo>> {
+        return useCases.getPhotosUseCase().cachedIn(viewModelScope)
     }
 
 
     fun video(): Flow<PagingData<VideoDataModel.Video>> {
-       return useCases.getVideosUseCase()
+        return useCases.getVideosUseCase()
     }
 
     sealed class PhotoAppState {
         object Empty : PhotoAppState()
         object Loading : PhotoAppState()
-        class Loaded(val list: Flow<PagingData<PhotoDataModel.Photo>>) : PhotoAppState()
+        class Loaded(val list: Flow<PagingData<Photos.Photo>>) : PhotoAppState()
         class Error(val message: String) : PhotoAppState()
     }
 

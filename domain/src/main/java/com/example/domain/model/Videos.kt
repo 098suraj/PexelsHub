@@ -9,6 +9,17 @@ import com.google.gson.reflect.TypeToken
 import java.io.Serializable
 
 data class VideoDataModel(
+    @SerializedName("next_page")
+    val nextPage: String,
+    @SerializedName("page")
+    val page: Int,
+    @SerializedName("per_page")
+    val perPage: Int,
+    @SerializedName("total_results")
+    val totalResults: Int,
+    @SerializedName("url")
+    val url: String,
+    @SerializedName("videos")
     val videos: List<Video>
 ) {
     @Entity(tableName = "video")
@@ -29,10 +40,10 @@ data class VideoDataModel(
 }
 
 data class User(
-   @SerializedName("id")
+    @SerializedName("id")
     var userId: Int,
     var name: String,
-   @SerializedName("url")
+    @SerializedName("url")
     var userUrl: String
 )
 
@@ -44,17 +55,17 @@ data class VideoFile(
     var link: String,
     var quality: String,
 
-    ):Serializable
+    ) : Serializable
 
- class   ListToData {
-     @TypeConverter
-     fun listToJson(v:List<VideoFile>):String  =
-         Gson().toJson(v)
+class ListToData {
+    @TypeConverter
+    fun listToJson(v: List<VideoFile>): String =
+        Gson().toJson(v)
 
-     @TypeConverter
-     fun GsonTolist(listOfString: String):List<VideoFile> =
-         Gson().fromJson(
-             listOfString,
-             object : TypeToken<List<VideoFile>>() {}.type
-         )
- }
+    @TypeConverter
+    fun GsonTolist(listOfString: String): List<VideoFile> =
+        Gson().fromJson(
+            listOfString,
+            object : TypeToken<List<VideoFile>>() {}.type
+        )
+}

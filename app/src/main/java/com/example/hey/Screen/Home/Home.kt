@@ -43,10 +43,6 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 fun Home(navController: DestinationsNavigator, homeViewModel: HomeViewModel = hiltViewModel()) {
     val systemUiController = rememberSystemUiController()
     val systemBarColor = MaterialTheme.colors.AppThemeColor
-    val getPhotos = homeViewModel.photo().collectAsLazyPagingItems()
-  //  val allVideos = homeViewModel.video().collectAsLazyPagingItems()
-
-
     SideEffect {
         systemUiController.setStatusBarColor(
             color = systemBarColor
@@ -60,12 +56,12 @@ fun Home(navController: DestinationsNavigator, homeViewModel: HomeViewModel = hi
 
         content = {
             Column(
-                Modifier.padding(start = 20.dp, end = 20.dp, top = 20.dp),
+                Modifier.padding(it),
                 horizontalAlignment = Alignment.Start,
             ) {
                 Top()
                 Spacer(modifier = Modifier.height(20.dp))
-                PhotoListContent( photo =getPhotos )
+                PhotoListContent(  )
             }
 
 
@@ -79,24 +75,16 @@ fun Home(navController: DestinationsNavigator, homeViewModel: HomeViewModel = hi
 fun Top() {
     Column(
         horizontalAlignment = Alignment.Start,
-
         ) {
         Text(
             text = buildAnnotatedString {
-                append("HEY \nSnigdha")
+                append("HEY")
                 addStyle(
                     style = SpanStyle(
                         color = MaterialTheme.colors.AppContentColor
                     ),
                     start = 0,
                     end = 4
-                )
-                addStyle(
-                    style = SpanStyle(
-                        color = colorResource(id = R.color.teal_200)
-                    ),
-                    start = 5,
-                    end = 7
                 )
             },
             fontSize = 20.sp,

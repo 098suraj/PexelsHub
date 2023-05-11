@@ -1,6 +1,6 @@
 package com.example.data.api
 
-import com.example.domain.model.PhotoDataModel
+import com.example.domain.model.Photos
 import com.example.domain.model.VideoDataModel
 import retrofit2.http.GET
 import retrofit2.http.Headers
@@ -13,7 +13,7 @@ interface ImvApi {
     suspend fun getPhotos(
         @Query("page") page: Int,
         @Query("per_page") perPage: Int
-    ): PhotoDataModel
+    ): Photos
 
 
 

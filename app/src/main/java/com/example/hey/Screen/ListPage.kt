@@ -41,7 +41,8 @@ val list = listOf(
     "Videos",
 )
 
-@ExperimentalPagerApi
+
+@OptIn(ExperimentalPagerApi::class)
 @Composable
 fun Tabs(pagerState: PagerState) {
     val scope = rememberCoroutineScope()
