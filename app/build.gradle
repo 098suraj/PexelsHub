@@ -85,14 +85,14 @@ android {
 }
 
 dependencies {
-    def composeBom = platform('androidx.compose:compose-bom:2023.04.01')
+    def composeBom = platform('androidx.compose:compose-bom:2024.10.00')
     implementation composeBom
     androidTestImplementation composeBom
 
     implementation 'com.google.devtools.ksp:symbol-processing-api:1.8.0-1.0.9'
-    implementation 'androidx.core:core-ktx:1.10.0'
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
-    implementation 'androidx.activity:activity-compose:1.7.1'
+    implementation 'androidx.core:core-ktx:1.13.1'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.8.6'
+    implementation 'androidx.activity:activity-compose:1.9.3'
 
     // compose Bom //
     implementation "androidx.compose.ui:ui"
@@ -106,28 +106,28 @@ dependencies {
     implementation project(path: ':domain')
     implementation project(path: ':data')
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
 
 
     //hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
-    implementation 'androidx.hilt:hilt-navigation-compose:1.0.0'
+    implementation 'androidx.hilt:hilt-navigation-compose:1.2.0'
 
     // Retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.11.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.11.0'
     implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0")
 
     //GSON
-    implementation 'com.google.code.gson:gson:2.10.1'
+    implementation 'com.google.code.gson:gson:2.11.0'
 
     // Coil
-    implementation("io.coil-kt:coil-compose:2.3.0")
+    implementation("io.coil-kt:coil-compose:2.7.0")
 
     // System UI Controller - Accompanist
-    implementation "com.google.accompanist:accompanist-systemuicontroller:0.30.1"
+    implementation "com.google.accompanist:accompanist-systemuicontroller:0.36.0"
 
     //ROOM DB
     implementation "androidx.room:room-runtime:$room_version"
@@ -137,21 +137,21 @@ dependencies {
 
     // Paging 3.0
     // Paging 3.0
-    implementation 'androidx.paging:paging-compose:1.0.0-alpha14'
+    implementation 'androidx.paging:paging-compose:3.3.2'
 
 
     //Pager
-    implementation "com.google.accompanist:accompanist-pager:0.30.1"
-    implementation "com.google.accompanist:accompanist-pager-indicators:0.30.1"
+    implementation "com.google.accompanist:accompanist-pager:0.36.0"
+    implementation "com.google.accompanist:accompanist-pager-indicators:0.36.0"
 
     //Media 3
-    def mediaVersion = "1.0.1"
+    def mediaVersion = "1.4.1"
     implementation "androidx.media3:media3-exoplayer:$mediaVersion"
     implementation "androidx.media3:media3-ui:$mediaVersion"
 
 
-    implementation 'io.github.raamcosta.compose-destinations:animations-core:1.7.25-beta'
-    ksp 'io.github.raamcosta.compose-destinations:ksp:1.7.25-beta'
+    implementation 'io.github.raamcosta.compose-destinations:animations-core:1.11.7'
+    ksp 'io.github.raamcosta.compose-destinations:ksp:1.11.7'
 
 }
 ktlint {
